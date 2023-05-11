@@ -126,7 +126,7 @@ function PokemonList() {
 
 
   return (
-    <Container className="mt-4 brandontest">
+    <Container className="mt-4 transparent-bg">
       <h1 className="text-center">Pokedex</h1>
       <div className="d-flex justify-content-center mt-4">
         <div className="input-group">
