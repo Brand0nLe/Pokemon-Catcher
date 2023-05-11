@@ -26,7 +26,9 @@ function PokemonDetails({ onAddFavorite, onRemoveFavorite, favoritePokemonIds }:
           imageUrl: data.sprites.front_default,
           sprites: {
             front_default: data.sprites.front_default,
+            back_default: data.sprites.back_default,
             front_shiny: data.sprites.front_shiny,
+            back_shiny: data.sprites.back_shiny,
           },
           types: data.types.map((type: any) => ({
             slot: type.slot,

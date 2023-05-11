@@ -39,6 +39,9 @@ function PokemonList() {
           sprites: {
             front_default: data.sprites.front_default,
             front_shiny: data.sprites.front_shiny,
+            back_default: data.sprites.back_default,
+            back_shiny: data.sprites.back_shiny,
+
           },
           types: data.types.map((type: any) => ({
             slot: type.slot,
@@ -166,7 +169,13 @@ function PokemonList() {
                 <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
               </Col>
               <Col sm={6} md={3} className="text-center">
+                <img src={pokemon.sprites.back_default} alt="Front Sprite" className="pokemon-image" />
+              </Col>
+              <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.front_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
+              </Col>
+              <Col sm={6} md={3} className="text-center">
+                <img src={pokemon.sprites.back_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
               </Col>
             </Row>
             <div className="pokemon-info">
