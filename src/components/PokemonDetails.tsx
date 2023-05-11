@@ -3,7 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Pokemon, PokemonCard } from './PokemonCard';
 
-function PokemonDetails() {
+interface PokemonDetailsProps {
+  onAddFavorite: (pokemon: Pokemon) => void;
+}
+
+function PokemonDetails({ onAddFavorite }: PokemonDetailsProps) {
   const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState(false);
@@ -42,7 +46,7 @@ function PokemonDetails() {
   return (
     <Container className="mt-4">
       {pokemon ? (
-        <PokemonCard pokemon={pokemon} />
+        <PokemonCard pokemon={pokemon} onAddFavorite={onAddFavorite} />
       ) : (
         <div>Loading...</div>
       )}
