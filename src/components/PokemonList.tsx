@@ -9,8 +9,8 @@ function PokemonList() {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState(false);
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
-    const storedFavorites = localStorage.getItem('favorites');
-    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  const storedFavorites = localStorage.getItem('favorites');
+  return storedFavorites ? JSON.parse(storedFavorites) : [];
   });
 
   const handleSearch = async () => {
@@ -126,7 +126,7 @@ function PokemonList() {
 
 
   return (
-    <Container className="mt-4">
+    <Container className="mt-4 brandontest">
       <h1 className="text-center">Pokedex</h1>
       <div className="d-flex justify-content-center mt-4">
         <div className="input-group">
