@@ -16,13 +16,38 @@ function PokemonList() {
       alert('Please enter a Pokemon name');
       return;
     }
-
+  
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery.toLowerCase()}`);
-
+  
       if (response.ok) {
         const data = await response.json();
-        setPokemon(data);
+  
+        const abilityResponse = await fetch(data.abilities[0].ability.url);
+        const abilityData = await abilityResponse.json();
+  
+        const speciesResponse = await fetch(data.species.url);
+        const speciesData = await speciesResponse.json();
+  
+        const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+        const evolutionData = await evolutionResponse.json();
+  
+        const pokemon: Pokemon = {
+          id: data.id,
+          name: data.name,
+          imageUrl: data.sprites.front_default,
+          sprites: {
+            front_default: data.sprites.front_default,
+            front_shiny: data.sprites.front_shiny,
+          },
+          types: data.types,
+          height: data.height,
+          weight: data.weight,
+          abilities: abilityData.abilities,
+          evolution_chain: evolutionData.chain,
+        };
+  
+        setPokemon(pokemon);
       } else if (response.status === 404) {
         alert('Invalid Pokemon name, please search for a real pokemon!');
         setPokemon(null);
@@ -35,6 +60,7 @@ function PokemonList() {
       setPokemon(null);
     }
   };
+  
 
   const handleRandom = async () => {
     try {
@@ -48,14 +74,14 @@ function PokemonList() {
     }
   };
 
-  const handleFavorite = (selectedPokemon: Pokemon) => {
-    const isFavorite = favorites.some((pokemon) => pokemon.id === selectedPokemon.id);
+  const handleFavorite = (pokemon: Pokemon) => {
+    const isFavorite = favorites.some((favPokemon) => favPokemon.id === pokemon.id);
     if (isFavorite) {
-      setFavorites((prevFavorites) => prevFavorites.filter((pokemon) => pokemon.id !== selectedPokemon.id));
-      alert(`${selectedPokemon.name} has been released from favorites!`);
+      setFavorites((prevFavorites) => prevFavorites.filter((favPokemon) => favPokemon.id !== pokemon.id));
+      alert(`${pokemon.name} has been released from favorites!`);
     } else {
-      setFavorites((prevFavorites) => [...prevFavorites, selectedPokemon]);
-      alert(`${selectedPokemon.name} caught and added to favorites!`);
+      setFavorites((prevFavorites) => [...prevFavorites, pokemon]);
+      alert(`${pokemon.name} caught and added to favorites!`);
     }
   };
 
@@ -95,8 +121,8 @@ function PokemonList() {
                 type="button"
                 onClick={() =>
                   favorites.some((favPokemon) => favPokemon.id === pokemon.id)
-                    ? handleRemoveFavorite(pokemon.id)
-                    : handleAddFavorite(pokemon)
+                    ? handleFavorite(pokemon)
+                    : handleFavorite(pokemon)
                 }
               >
                 {favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? 'Release' : 'Catch'}
@@ -157,13 +183,14 @@ function PokemonList() {
               <h5>Evolution Chain:</h5>
               <div className="pokemon-evolution">
                 {pokemon.evolution_chain ? (
-                  pokemon.evolution_chain.map((evolution) => (
-                    <span key={evolution.id}>{evolution.name}</span>
+                  pokemon.evolution_chain.chain.map((link: any) => (
+                    <span key={link.species.name}>{link.species.name}</span>
                   ))
                 ) : (
                   <span>No evolution chain available</span>
                 )}
               </div>
+
             </div>
           </Card.Body>
         </Card>
