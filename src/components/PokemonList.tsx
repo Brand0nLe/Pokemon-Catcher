@@ -37,42 +37,20 @@ function PokemonList() {
     }
   };
 
-  const handleRandom = () => {
-    const randomId = Math.floor(Math.random() * 898) + 1;
-    window.location.href = `/pokemon/${randomId}`;
+  const handleRandom = async () => {
+    try {
+      const randomId = Math.floor(Math.random() * 898) + 1;
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+      const data = await response.json();
+      setPokemon(data);
+    } catch (error) {
+      console.error(error);
+      setPokemon(null);
+    }
   };
 
   useEffect(() => {
-    const fetchPokemonList = async () => {
-      try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20');
-        const data = await response.json();
-        const fetchedPokemon = await Promise.all(
-          data.results.map(async (result: any) => {
-            const response = await fetch(result.url);
-            const data = await response.json();
-            const pokemon: Pokemon = {
-              id: data.id,
-              name: data.name,
-              sprites: {
-                front_default: data.sprites.front_default,
-                back_default: data.sprites.back_default,
-                front_shiny: data.sprites.front_shiny,
-                back_shiny: data.sprites.back_shiny,
-              },
-              moves: data.moves,
-              types: data.types,
-              abilities: data.abilities,
-            };
-            return pokemon;
-          })
-        );
-        setPokemon(fetchedPokemon[0]);
-      } catch (error) {
-        setError(true);
-      }
-    };
-    fetchPokemonList();
+    handleRandom();
   }, []);
 
   if (error) {
@@ -95,19 +73,16 @@ function PokemonList() {
             <button className="btn btn-primary" type="button" onClick={handleSearch}>
               Search
             </button>
+            <button className="btn btn-primary" type="button" onClick={handleRandom}>
+              Random Pokemon
+            </button>
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-end mb-4">
-        <Button variant="primary" onClick={handleRandom}>
-          Random Pokemon
-        </Button>
-      </div>
       {pokemon && (
-        <Card className="mt-4 pokemon-card">
+        <Card className="mt-4">
           <Card.Body>
-           
-          <Card.Title className="text-center">{pokemon.name}</Card.Title>
+            <Card.Title className="text-center">{pokemon.name}</Card.Title>
             <Row>
               <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
@@ -118,7 +93,7 @@ function PokemonList() {
                 <p>Back</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.front_shiny} alt="Front Shiny Sprite" className="pokemon-image" />
+                <img src={pokemon.sprites.front_shiny} alt                ="Front Shiny Sprite" className="pokemon-image" />
                 <p>Shiny Front</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
@@ -129,24 +104,33 @@ function PokemonList() {
             <div className="pokemon-info">
               <h5>Moves:</h5>
               <div className="pokemon-moves">
-                {pokemon.moves.map((move) => (
-                  <div key={move.move.name}>{move.move.name}</div>
+                {pokemon.moves.map((move, index) => (
+                  <span key={move.move.name}>
+                    {index > 0 && ", "}
+                    {move.move.name}
+                  </span>
                 ))}
               </div>
             </div>
             <div className="pokemon-info">
               <h5>Types:</h5>
               <div className="pokemon-types">
-                {pokemon.types.map((type) => (
-                  <div key={type.slot}>{type.type.name}</div>
+                {pokemon.types.map((type, index) => (
+                  <span key={type.slot}>
+                    {index > 0 && ", "}
+                    {type.type.name}
+                  </span>
                 ))}
               </div>
             </div>
             <div className="pokemon-info">
               <h5>Abilities:</h5>
               <div className="pokemon-abilities">
-                {pokemon.abilities.map((ability) => (
-                  <div key={ability.slot}>{ability.ability.name}</div>
+                {pokemon.abilities.map((ability, index) => (
+                  <span key={ability.slot}>
+                    {index > 0 && ", "}
+                    {ability.ability.name}
+                  </span>
                 ))}
               </div>
             </div>
@@ -158,3 +142,4 @@ function PokemonList() {
 }
 
 export default PokemonList;
+
