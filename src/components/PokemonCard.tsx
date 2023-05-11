@@ -2,12 +2,13 @@ import React from 'react';
 import { Pokemon } from '../interfaces';
 
 interface Props {
-  pokemon: Pokemon | null; 
+  pokemon: Pokemon;
   handleFavorite: (pokemon: Pokemon) => void;
   isFavorite: boolean;
 }
 
 const PokemonCard: React.FC<Props> = ({ pokemon, handleFavorite, isFavorite }) => {
+
   if (!pokemon) {
     return null; 
   }
