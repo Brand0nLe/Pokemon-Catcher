@@ -8,9 +8,8 @@ interface Props {
 }
 
 const PokemonCard: React.FC<Props> = ({ pokemon, handleFavorite, isFavorite }) => {
-
-  if (!pokemon) {
-    return null; 
+  if (!pokemon || !pokemon.imageUrl) {
+    return null;
   }
 
   return (

@@ -197,26 +197,7 @@ function PokemonList() {
                 ))}
               </div>
             </div>
-            <div className="pokemon-info">
-              <h5>Evolution Chain:</h5>
-              <div className="pokemon-evolution">
-                {pokemon.evolution_chain ? (
-                  <>
-                    <span>{pokemon.evolution_chain.chain.species.name}</span>
-                    {pokemon.evolution_chain.chain.evolves_to.map((evolvesTo) => (
-                      evolvesTo.species.map((species) => (
-                        <span key={species.name}>{species.name}</span>
-                      ))
-                    ))}
-                  </>
-                ) : (
-                  <span>No evolution chain available</span>
-                )}
 
-
-              </div>
-
-            </div>
           </Card.Body>
         </Card>
       )}
