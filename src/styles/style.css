@@ -63,6 +63,8 @@ div.wrapper.row {
   border-color: #4F8235!important;
   display: flex;
   align-items: stretch;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .btn-primary:hover {
@@ -222,7 +224,7 @@ div.card-body{
   background-color: transparent;
 }
 
-div.mt-4{
+div.container.mt-4{
   text-transform: capitalize;
 }
 
@@ -231,7 +233,7 @@ background-color: transparent;
 }
 
 .footer{
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 
