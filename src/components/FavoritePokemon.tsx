@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Pokemon } from './PokemonCard';
 
@@ -36,3 +36,4 @@ function FavoritePokemon() {
 }
 
 export default FavoritePokemon;
+

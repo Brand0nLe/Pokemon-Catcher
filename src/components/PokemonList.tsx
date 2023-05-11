@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Card, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import '../styles/style.css';
 
 interface Pokemon {
@@ -14,12 +15,14 @@ interface Pokemon {
   moves: { move: { name: string } }[];
   types: { slot: number; type: { name: string } }[];
   abilities: { slot: number; ability: { name: string } }[];
+  evolution_chain: { id: number; name: string }[];
 }
 
 function PokemonList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState(false);
+  const [favorites, setFavorites] = useState<Pokemon[]>([]);
 
   const handleSearch = async () => {
     if (searchQuery.trim() === '') {
@@ -46,7 +49,6 @@ function PokemonList() {
     }
   };
 
-
   const handleRandom = async () => {
     try {
       const randomId = Math.floor(Math.random() * 898) + 1;
@@ -56,6 +58,22 @@ function PokemonList() {
     } catch (error) {
       console.error(error);
       setPokemon(null);
+    }
+  };
+
+  const handleCatch = () => {
+    if (pokemon) {
+      setFavorites((prevFavorites) => [...prevFavorites, pokemon]);
+      alert(`${pokemon.name} caught and added to favorites!`);
+    }
+  };
+
+  const handleRelease = () => {
+    if (pokemon) {
+      setFavorites((prevFavorites) =>
+        prevFavorites.filter((favPokemon) => favPokemon.id !== pokemon.id)
+      );
+      alert(`${pokemon.name} released from favorites!`);
     }
   };
 
@@ -84,8 +102,16 @@ function PokemonList() {
               Search
             </button>
             <button className="btn btn-primary" type="button" onClick={handleRandom}>
-              Random Pokemon
-            </button>
+              Random Pokemon            </button>
+            {pokemon && (
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? handleRelease : handleCatch}
+              >
+                {favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? 'Release' : 'Catch'}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -112,17 +138,6 @@ function PokemonList() {
               </Col>
             </Row>
             <div className="pokemon-info">
-              <h5>Moves:</h5>
-              <div className="pokemon-moves">
-                {pokemon.moves.map((move, index) => (
-                  <span key={`${move.move.name}-${index}`}>
-                    {index > 0 && ", "}
-                    {move.move.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="pokemon-info">
               <h5>Types:</h5>
               <div className="pokemon-types">
                 {pokemon.types.map((type, index) => (
@@ -141,6 +156,25 @@ function PokemonList() {
                     {index > 0 && ", "}
                     {ability.ability.name}
                   </span>
+                ))}
+              </div>
+            </div>
+            <div className="pokemon-info">
+              <h5>Moves:</h5>
+              <div className="pokemon-moves">
+                {pokemon.moves.map((move, index) => (
+                  <span key={`${move.move.name}-${index}`}>
+                    {index > 0 && ", "}
+                    {move.move.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="pokemon-info">
+              <h5>Evolution Chain:</h5>
+              <div className="pokemon-evolution">
+                {pokemon.evolution_chain.map((evolution) => (
+                  <span key={evolution.id}>{evolution.name}</span>
                 ))}
               </div>
             </div>
