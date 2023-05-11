@@ -11,4 +11,5 @@ export interface Pokemon {
   weight: number;
   abilities: { ability: { name: string; url: string } }[];
   evolution_chain: { chain: { species: { name: string }; evolves_to: { species: { name: string }[] }[] } };
+  moves: { move: { name: string } }[];
 }

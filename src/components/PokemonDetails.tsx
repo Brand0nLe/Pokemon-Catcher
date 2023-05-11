@@ -28,9 +28,17 @@ function PokemonDetails({ onAddFavorite, onRemoveFavorite, favoritePokemonIds }:
             front_default: data.sprites.front_default,
             front_shiny: data.sprites.front_shiny,
           },
-          types: data.types.map((type: any) => type.type.name),
+          types: data.types.map((type: any) => ({
+            slot: type.slot,
+            type: {
+              name: type.type.name,
+            },
+          })),
           height: data.height,
           weight: data.weight,
+          abilities: [],
+          evolution_chain: { chain: { species: { name: '' }, evolves_to: [] } },
+          moves: [],
         };
 
         setPokemon(pokemon);

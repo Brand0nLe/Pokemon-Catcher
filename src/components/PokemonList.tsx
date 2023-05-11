@@ -16,22 +16,22 @@ function PokemonList() {
       alert('Please enter a Pokemon name');
       return;
     }
-  
+
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery.toLowerCase()}`);
-  
+
       if (response.ok) {
         const data = await response.json();
-  
+
         const abilityResponse = await fetch(data.abilities[0].ability.url);
         const abilityData = await abilityResponse.json();
-  
+
         const speciesResponse = await fetch(data.species.url);
         const speciesData = await speciesResponse.json();
-  
+
         const evolutionResponse = await fetch(speciesData.evolution_chain.url);
         const evolutionData = await evolutionResponse.json();
-  
+
         const pokemon: Pokemon = {
           id: data.id,
           name: data.name,
@@ -40,13 +40,29 @@ function PokemonList() {
             front_default: data.sprites.front_default,
             front_shiny: data.sprites.front_shiny,
           },
-          types: data.types,
+          types: data.types.map((type: any) => ({
+            slot: type.slot,
+            type: {
+              name: type.type.name,
+            },
+          })),
           height: data.height,
           weight: data.weight,
-          abilities: abilityData.abilities,
-          evolution_chain: evolutionData.chain,
+          abilities: data.abilities.map((ability: any) => ({
+            ability: {
+              name: ability.ability.name,
+              url: ability.ability.url,
+            },
+          })),
+          evolution_chain: data.evolution_chain,
+          moves: data.moves.map((move: any) => ({
+            move: {
+              name: move.move.name,
+            },
+          })),
         };
-  
+
+
         setPokemon(pokemon);
       } else if (response.status === 404) {
         alert('Invalid Pokemon name, please search for a real pokemon!');
@@ -60,7 +76,7 @@ function PokemonList() {
       setPokemon(null);
     }
   };
-  
+
 
   const handleRandom = async () => {
     try {
@@ -160,11 +176,8 @@ function PokemonList() {
             <div className="pokemon-info">
               <h5>Abilities:</h5>
               <div className="pokemon-abilities">
-                {pokemon.abilities.map((ability, index) => (
-                  <span key={ability.slot}>
-                    {index > 0 && ', '}
-                    {ability.ability.name}
-                  </span>
+                {pokemon.abilities.map((ability) => (
+                  <span key={ability.ability.name}>{ability.ability.name}</span>
                 ))}
               </div>
             </div>
@@ -183,12 +196,19 @@ function PokemonList() {
               <h5>Evolution Chain:</h5>
               <div className="pokemon-evolution">
                 {pokemon.evolution_chain ? (
-                  pokemon.evolution_chain.chain.map((link: any) => (
-                    <span key={link.species.name}>{link.species.name}</span>
-                  ))
+                  <>
+                    <span>{pokemon.evolution_chain.chain.species.name}</span>
+                    {pokemon.evolution_chain.chain.evolves_to.map((evolvesTo) => (
+                      evolvesTo.species.map((species) => (
+                        <span key={species.name}>{species.name}</span>
+                      ))
+                    ))}
+                  </>
                 ) : (
                   <span>No evolution chain available</span>
                 )}
+
+
               </div>
 
             </div>
