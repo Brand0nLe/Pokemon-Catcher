@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Pokemon, PokemonCard } from './PokemonCard';
 

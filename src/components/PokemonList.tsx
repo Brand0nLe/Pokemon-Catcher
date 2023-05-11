@@ -65,6 +65,8 @@ function PokemonList() {
     return <div>Error loading data</div>;
   }
 
+
+
   return (
     <Container className="mt-4">
       <h1 className="text-center">Pokedex</h1>
@@ -176,7 +178,3 @@ function PokemonList() {
 }
 
 export default PokemonList;
-const handleAddFavorite = (pokemon: Pokemon) => {
-  setFavorites((prevFavorites) => [...prevFavorites, pokemon]);
-  alert(`${pokemon.name} caught and added to favorites!`);
-};
