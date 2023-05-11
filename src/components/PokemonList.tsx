@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, CardGroup, Container, Card, Row, Col } from 'react-bootstrap';
+import '../styles/style.css';
 
 interface Pokemon {
   id: number;
@@ -57,11 +58,12 @@ function PokemonList() {
             return pokemon;
           })
         );
-        fetchPokemonList();
+        setPokemon(pokemonData);
       } catch (error) {
         setError(true);
       }
     };
+
     fetchPokemonList();
   }, []);
 
@@ -100,7 +102,7 @@ function PokemonList() {
               <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.back_default} alt="Back Sprite" />
                 <p>Back</p>
-              </Col>
+                </Col>
               <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.front_shiny} alt="Front Shiny Sprite" />
                 <p>Shiny Front</p>
@@ -112,27 +114,33 @@ function PokemonList() {
             </Row>
             <div className="mt-4">
               <h5>Moves:</h5>
-              <ul>
+              <div className="move-list">
                 {pokemon.moves.map((move) => (
-                  <li key={move.move.name}>{move.move.name}</li>
+                  <span key={move.move.name} className="move-item">
+                    {move.move.name}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
             <div>
               <h5>Types:</h5>
-              <ul>
+              <div className="type-list">
                 {pokemon.types.map((type) => (
-                  <li key={type.slot}>{type.type.name}</li>
+                  <span key={type.slot} className="type-item">
+                    {type.type.name}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
             <div>
               <h5>Abilities:</h5>
-              <ul>
+              <div className="ability-list">
                 {pokemon.abilities.map((ability) => (
-                  <li key={ability.slot}>{ability.ability.name}</li>
+                  <span key={ability.slot} className="ability-item">
+                    {ability.ability.name}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
           </Card.Body>
         </Card>
