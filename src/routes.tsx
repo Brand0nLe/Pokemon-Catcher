@@ -4,27 +4,29 @@ import PokemonDetails from './components/PokemonDetails';
 import FavoritePokemon from './components/FavoritePokemon';
 import RandomPokemon from './components/RandomPokemon';
 
-type CustomRouteProps = RouteProps & {
+interface CustomRouteProps {
+  path: string;
   exact?: boolean;
-};
+  component: React.ComponentType<any>;
+}
 
 const routes: CustomRouteProps[] = [
   {
     path: '/',
     exact: true,
-    Component: PokemonList,
+    component: PokemonList,
   },
   {
     path: '/pokemon/:id',
-    Component: PokemonDetails,
+    component: PokemonDetails,
   },
   {
     path: '/favorite',
-    Component: FavoritePokemon,
+    component: FavoritePokemon,
   },
   {
     path: '/random',
-    Component: RandomPokemon,
+    component: RandomPokemon,
   },
 ];
 

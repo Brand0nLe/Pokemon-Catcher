@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import routes from './routes';
 import Navbar from './components/NavBar';
 
@@ -8,9 +8,11 @@ function App() {
       <div>
         <Navbar />
         <div className="container mt-4">
-          {routes.map((route, index) => (
-            <Route key={index} path={route.path} Component={route.Component} />
-          ))}
+          <Routes>
+            {routes.map((route, index) => (
+              <Route key={index} path={route.path} element={<route.component />} />
+            ))}
+          </Routes>
         </div>
       </div>
     </Router>
