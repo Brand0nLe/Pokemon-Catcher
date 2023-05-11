@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Card, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { Pokemon } from '../interfaces';
 import PokemonCard from './PokemonCard';
 import '../styles/style.css';
+
+
+
 
 function PokemonList() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -129,14 +131,14 @@ function PokemonList() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <div className="input-group-append">
-            <button className="btn btn-primary" type="button" onClick={handleSearch}>
+            <Button className="btn btn-primary" type="button" onClick={handleSearch}>
               Search
-            </button>
-            <button className="btn btn-primary" type="button" onClick={handleRandom}>
+            </Button>
+            <Button className="btn btn-primary" type="button" onClick={handleRandom}>
               Random Pokemon
-            </button>
+            </Button>
             {pokemon && (
-              <button
+              <Button
                 className="btn btn-primary"
                 type="button"
                 onClick={() =>
@@ -146,8 +148,7 @@ function PokemonList() {
                 }
               >
                 {favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? 'Release' : 'Catch'}
-              </button>
-
+              </Button>
             )}
           </div>
         </div>
