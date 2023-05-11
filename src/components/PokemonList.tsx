@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Card, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Pokemon, PokemonCard } from './PokemonCard';
 import '../styles/style.css';
 
 interface Pokemon {
@@ -103,18 +104,12 @@ function PokemonList() {
             </button>
             <button className="btn btn-primary" type="button" onClick={handleRandom}>
               Random Pokemon            </button>
-            {pokemon && (
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? handleRelease : handleCatch}
-              >
-                {favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? 'Release' : 'Catch'}
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+           {pokemon && (
+        <Card className="mt-4">
+          <Card.Body>
+            <Card.Title className="text-center">{pokemon.name}</Card.Title>
+            <Row>
+              <Col sm={6} md={3} className="text-center">
       {pokemon && (
         <Card className="mt-4">
           <Card.Body>
@@ -122,19 +117,11 @@ function PokemonList() {
             <Row>
               <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
-                <p>Front</p>
+                <p>Normal</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.back_default} alt="Back Sprite" className="pokemon-image" />
-                <p>Back</p>
-              </Col>
-              <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.front_shiny} alt="Front Shiny Sprite" className="pokemon-image" />
-                <p>Shiny Front</p>
-              </Col>
-              <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.back_shiny} alt="Back Shiny Sprite" className="pokemon-image" />
-                <p>Shiny Back</p>
+                <img src={pokemon.sprites.front_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
+                <p>Shiny</p>
               </Col>
             </Row>
             <div className="pokemon-info">
@@ -173,9 +160,13 @@ function PokemonList() {
             <div className="pokemon-info">
               <h5>Evolution Chain:</h5>
               <div className="pokemon-evolution">
-                {pokemon.evolution_chain.map((evolution) => (
-                  <span key={evolution.id}>{evolution.name}</span>
-                ))}
+                {pokemon && pokemon.evolution_chain ? (
+                  pokemon.evolution_chain.map((evolution) => (
+                    <span key={evolution.id}>{evolution.name}</span>
+                  ))
+                ) : (
+                  <span>No evolution chain available</span>
+                )}
               </div>
             </div>
           </Card.Body>

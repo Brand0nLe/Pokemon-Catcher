@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { Pokemon } from './PokemonCard';
+import { Pokemon, PokemonCard } from './PokemonCard';
 
 function FavoritePokemon() {
   const [favoritePokemon, setFavoritePokemon] = useState<Pokemon[]>([]);
@@ -22,7 +22,7 @@ function FavoritePokemon() {
     <div>
       {favoritePokemon.map(pokemon => (
         <Card key={pokemon.id} className="mb-4">
-          <Card.Img variant="top" src={pokemon.imageUrl} />
+          <PokemonCard pokemon={pokemon} />
           <Card.Body>
             <Card.Title>{pokemon.name}</Card.Title>
             <Button variant="danger" onClick={() => handleRemoveFavorite(pokemon.id)}>
@@ -36,4 +36,3 @@ function FavoritePokemon() {
 }
 
 export default FavoritePokemon;
-

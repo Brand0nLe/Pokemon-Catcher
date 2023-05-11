@@ -1,4 +1,3 @@
-import { RouteProps } from 'react-router-dom';
 import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
 import FavoritePokemon from './components/FavoritePokemon';
