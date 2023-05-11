@@ -1,20 +1,36 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, CardGroup, Container } from 'react-bootstrap';
-import { PokemonCard } from './PokemonCard';
+import { Button, CardGroup, Container, Card, Row, Col } from 'react-bootstrap';
 
 interface Pokemon {
   id: number;
   name: string;
-  imageUrl: string;
-  types: string[];
-  height: number;
-  weight: number;
+  sprites: {
+    front_default: string;
+    back_default: string;
+    front_shiny: string;
+    back_shiny: string;
+  };
+  moves: { move: { name: string } }[];
+  types: { slot: number; type: { name: string } }[];
+  abilities: { slot: number; ability: { name: string } }[];
 }
 
 function PokemonList() {
-  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState(false);
+
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery.toLowerCase()}`);
+      const data = await response.json();
+      setPokemon(data);
+    } catch (error) {
+      console.error(error);
+      setPokemon(null);
+    }
+  };
 
   useEffect(() => {
     const fetchPokemonList = async () => {
@@ -28,15 +44,20 @@ function PokemonList() {
             const pokemon: Pokemon = {
               id: data.id,
               name: data.name,
-              imageUrl: data.sprites.front_default,
-              types: data.types.map((type: any) => type.type.name),
-              height: data.height / 10,
-              weight: data.weight / 10,
+              sprites: {
+                front_default: data.sprites.front_default,
+                back_default: data.sprites.back_default,
+                front_shiny: data.sprites.front_shiny,
+                back_shiny: data.sprites.back_shiny,
+              },
+              moves: data.moves,
+              types: data.types,
+              abilities: data.abilities,
             };
             return pokemon;
           })
         );
-        setPokemonList(pokemonData);
+        fetchPokemonList();
       } catch (error) {
         setError(true);
       }
@@ -50,16 +71,72 @@ function PokemonList() {
 
   return (
     <Container className="mt-4">
-      <div className="d-flex justify-content-end mb-4">
-        <Link to="/random">
-          <Button variant="primary">Random Pokemon</Button>
-        </Link>
+      <h1 className="text-center">Pokemon Search</h1>
+      <div className="d-flex justify-content-center mt-4">
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter Pokemon Name"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="input-group-append">
+            <button className="btn btn-primary" type="button" onClick={handleSearch}>
+              Search
+            </button>
+          </div>
+        </div>
       </div>
-      <CardGroup>
-        {pokemonList.map(pokemon => (
-          <PokemonCard key={pokemon.id} pokemon={pokemon} />
-        ))}
-      </CardGroup>
+      {pokemon && (
+        <Card className="mt-4">
+          <Card.Body>
+            <Card.Title className="text-center">{pokemon.name}</Card.Title>
+            <Row>
+              <Col sm={6} md={3} className="text-center">
+                <img src={pokemon.sprites.front_default} alt="Front Sprite" />
+                <p>Front</p>
+              </Col>
+              <Col sm={6} md={3} className="text-center">
+                <img src={pokemon.sprites.back_default} alt="Back Sprite" />
+                <p>Back</p>
+              </Col>
+              <Col sm={6} md={3} className="text-center">
+                <img src={pokemon.sprites.front_shiny} alt="Front Shiny Sprite" />
+                <p>Shiny Front</p>
+              </Col>
+              <Col sm={6} md={3} className="text-center">
+                <img src={pokemon.sprites.back_shiny} alt="Back Shiny Sprite" />
+                <p>Shiny Back</p>
+              </Col>
+            </Row>
+            <div className="mt-4">
+              <h5>Moves:</h5>
+              <ul>
+                {pokemon.moves.map((move) => (
+                  <li key={move.move.name}>{move.move.name}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h5>Types:</h5>
+              <ul>
+                {pokemon.types.map((type) => (
+                  <li key={type.slot}>{type.type.name}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h5>Abilities:</h5>
+              <ul>
+                {pokemon.abilities.map((ability) => (
+                  <li key={ability.slot}>{ability.ability.name}</li>
+                ))}
+              </ul>
+            </div>
+          </Card.Body>
+        </Card>
+      )}
     </Container>
   );
 }
