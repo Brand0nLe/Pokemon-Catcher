@@ -128,7 +128,8 @@ function PokemonList() {
   return (
     <Container className="mt-4 transparent-bg">
       <h1 className="text-center">Pokedex</h1>
-      <div className="d-flex justify-content-center mt-4">
+      <div className=" mt-4">
+        <Row className='wrapper'>
         <div className="input-group">
           <input
             type="text"
@@ -159,22 +160,23 @@ function PokemonList() {
             )}
           </div>
         </div>
+        </Row>
       </div>
       {pokemon && (
         <Card className="mt-4">
           <Card.Body>
             <Card.Title className="text-center">{pokemon.name}</Card.Title>
             <Row>
-              <Col sm={6} md={3} className="text-center">
+              <Col sm={6} md={3}>
                 <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
               </Col>
-              <Col sm={6} md={3} className="text-center">
+              <Col sm={6} md={3}>
                 <img src={pokemon.sprites.back_default} alt="Front Sprite" className="pokemon-image" />
               </Col>
-              <Col sm={6} md={3} className="text-center">
+              <Col sm={6} md={3}>
                 <img src={pokemon.sprites.front_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
               </Col>
-              <Col sm={6} md={3} className="text-center">
+              <Col sm={6} md={3}>
                 <img src={pokemon.sprites.back_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
               </Col>
             </Row>
@@ -214,7 +216,7 @@ function PokemonList() {
       )}
 
       {/* Favorite Pokemon section */}
-      <h2 className="mt-4 text-center">Favorite Pokemon</h2>
+      <h2 className="mt-4 text-center">Pokemon Storage</h2>
       <div className="favorite-pokemon">
         {favorites.map((favPokemon) => (
           <PokemonCard key={favPokemon.id} pokemon={favPokemon} handleFavorite={handleFavorite} isFavorite={true} />

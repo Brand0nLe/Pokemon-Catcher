@@ -8,8 +8,8 @@ import './styles/style.css';
 function App() {
   return (
     <Router>
-      <div>
-        <div className="container mt-4">
+      <div className="container mt-4">
+        <div>
           <Routes>
             {routes.map((route, index) => (
               <Route key={index} path={route.path} element={<route.component />} />
@@ -17,6 +17,7 @@ function App() {
           </Routes>
         </div>
       </div>
+      <div className='footer'></div>
     </Router>
   );
 }
