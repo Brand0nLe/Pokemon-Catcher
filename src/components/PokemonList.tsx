@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, CardGroup, Container, Card, Row, Col } from 'react-bootstrap';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import '../styles/style.css';
 
 interface Pokemon {
@@ -23,6 +22,11 @@ function PokemonList() {
   const [error, setError] = useState(false);
 
   const handleSearch = async () => {
+    if (searchQuery.trim() === '') {
+      alert('Please enter a Pokemon name');
+      return;
+    }
+
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery.toLowerCase()}`);
       const data = await response.json();
@@ -38,7 +42,7 @@ function PokemonList() {
       try {
         const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20');
         const data = await response.json();
-        const pokemonData = await Promise.all(
+        const fetchedPokemon = await Promise.all(
           data.results.map(async (result: any) => {
             const response = await fetch(result.url);
             const data = await response.json();
@@ -58,12 +62,11 @@ function PokemonList() {
             return pokemon;
           })
         );
-        setPokemon(pokemonData);
+        setPokemon(fetchedPokemon[0]);
       } catch (error) {
         setError(true);
       }
     };
-
     fetchPokemonList();
   }, []);
 
@@ -91,54 +94,48 @@ function PokemonList() {
         </div>
       </div>
       {pokemon && (
-        <Card className="mt-4">
+        <Card className="mt-4 pokemon-card">
           <Card.Body>
             <Card.Title className="text-center">{pokemon.name}</Card.Title>
             <Row>
               <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.front_default} alt="Front Sprite" />
+                <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
                 <p>Front</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.back_default} alt="Back Sprite" />
+                <img src={pokemon.sprites.back_default} alt="Back Sprite" className="pokemon-image" />
                 <p>Back</p>
-                </Col>
+              </Col>
               <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.front_shiny} alt="Front Shiny Sprite" />
+                <img src={pokemon.sprites.front_shiny} alt="Front Shiny Sprite" className="pokemon-image" />
                 <p>Shiny Front</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.back_shiny} alt="Back Shiny Sprite" />
+                <img src={pokemon.sprites.back_shiny} alt="Back Shiny Sprite" className="pokemon-image" />
                 <p>Shiny Back</p>
               </Col>
             </Row>
-            <div className="mt-4">
+            <div className="pokemon-info">
               <h5>Moves:</h5>
-              <div className="move-list">
+              <div className="pokemon-moves">
                 {pokemon.moves.map((move) => (
-                  <span key={move.move.name} className="move-item">
-                    {move.move.name}
-                  </span>
+                  <div key={move.move.name}>{move.move.name}</div>
                 ))}
               </div>
             </div>
-            <div>
+            <div className="pokemon-info">
               <h5>Types:</h5>
-              <div className="type-list">
+              <div className="pokemon-types">
                 {pokemon.types.map((type) => (
-                  <span key={type.slot} className="type-item">
-                    {type.type.name}
-                  </span>
+                  <div key={type.slot}>{type.type.name}</div>
                 ))}
               </div>
             </div>
-            <div>
+            <div className="pokemon-info">
               <h5>Abilities:</h5>
-              <div className="ability-list">
+              <div className="pokemon-abilities">
                 {pokemon.abilities.map((ability) => (
-                  <span key={ability.slot} className="ability-item">
-                    {ability.ability.name}
-                  </span>
+                  <div key={ability.slot}>{ability.ability.name}</div>
                 ))}
               </div>
             </div>

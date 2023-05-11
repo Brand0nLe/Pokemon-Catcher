@@ -45,3 +45,34 @@
     margin-bottom: 10px;
   }
   
+  .move-list,
+  .type-list,
+  .ability-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .move-item,
+  .type-item,
+  .ability-item {
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .move-item {
+    font-weight: bold;
+  }
+  
+  .type-item {
+    color: #fff;
+    background-color: #4285f4;
+  }
+  
+  .ability-item {
+    background-color: #e0e0e0;
+  }
+  
