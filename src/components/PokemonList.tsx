@@ -90,14 +90,18 @@ function PokemonList() {
     }
   };
 
-  const handleFavorite = (pokemon: Pokemon) => {
-    const isFavorite = favorites.some((favPokemon) => favPokemon.id === pokemon.id);
+  const handleFavorite = (selectedPokemon: Pokemon) => {
+    const isFavorite = favorites.some((pokemon) => pokemon.id === selectedPokemon.id);
     if (isFavorite) {
-      setFavorites((prevFavorites) => prevFavorites.filter((favPokemon) => favPokemon.id !== pokemon.id));
-      alert(`${pokemon.name} has been released from favorites!`);
+      setFavorites((prevFavorites) => prevFavorites.filter((pokemon) => pokemon.id !== selectedPokemon.id));
+      alert(`${selectedPokemon.name} has been released from favorites!`);
     } else {
-      setFavorites((prevFavorites) => [...prevFavorites, pokemon]);
-      alert(`${pokemon.name} caught and added to favorites!`);
+      const newFavorite: Pokemon = {
+        ...selectedPokemon,
+        imageUrl: selectedPokemon.sprites.front_default,
+      };
+      setFavorites((prevFavorites) => [...prevFavorites, newFavorite]);
+      alert(`${selectedPokemon.name} caught and added to favorites!`);
     }
   };
 

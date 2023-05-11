@@ -2,12 +2,16 @@ import React from 'react';
 import { Pokemon } from '../interfaces';
 
 interface Props {
-  pokemon: Pokemon;
+  pokemon: Pokemon | null; 
   handleFavorite: (pokemon: Pokemon) => void;
   isFavorite: boolean;
 }
 
 const PokemonCard: React.FC<Props> = ({ pokemon, handleFavorite, isFavorite }) => {
+  if (!pokemon) {
+    return null; 
+  }
+
   return (
     <div className="pokemon-card">
       <img src={pokemon.imageUrl} alt={pokemon.name} />
@@ -20,5 +24,3 @@ const PokemonCard: React.FC<Props> = ({ pokemon, handleFavorite, isFavorite }) =
 };
 
 export default PokemonCard;
-
-
