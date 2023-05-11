@@ -9,12 +9,7 @@ function App() {
         <Navbar />
         <div className="container mt-4">
           {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              component={route.Component}
-            />
+            <Route key={index} path={route.path} Component={route.Component} />
           ))}
         </div>
       </div>
