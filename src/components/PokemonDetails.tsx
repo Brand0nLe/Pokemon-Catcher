@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { Pokemon, PokemonCard } from './PokemonCard';
+import PokemonCard from './PokemonCard';
+import { Pokemon } from '../interfaces';
 
 interface PokemonDetailsProps {
   onAddFavorite: (pokemon: Pokemon) => void;
+  onRemoveFavorite: (pokemonId: number) => void;
+  favoritePokemonIds: number[];
 }
 
-const PokemonDetails: React.FC<PokemonDetailsProps> = ({ onAddFavorite }: PokemonDetailsProps) => {
+function PokemonDetails({ onAddFavorite, onRemoveFavorite, favoritePokemonIds }: PokemonDetailsProps) {
   const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState(false);
@@ -40,6 +43,14 @@ const PokemonDetails: React.FC<PokemonDetailsProps> = ({ onAddFavorite }: Pokemo
     fetchPokemon();
   }, [id]);
 
+  const handleToggleFavorite = (pokemon: Pokemon) => {
+    if (favoritePokemonIds.includes(pokemon.id)) {
+      onRemoveFavorite(pokemon.id);
+    } else {
+      onAddFavorite(pokemon);
+    }
+  };
+
   if (error) {
     return <div>Error loading data</div>;
   }
@@ -47,12 +58,16 @@ const PokemonDetails: React.FC<PokemonDetailsProps> = ({ onAddFavorite }: Pokemo
   return (
     <Container className="mt-4">
       {pokemon ? (
-        <PokemonCard pokemon={pokemon} onAddFavorite={onAddFavorite} />
+        <PokemonCard
+          pokemon={pokemon}
+          handleFavorite={handleToggleFavorite}
+          isFavorite={favoritePokemonIds.includes(pokemon.id)}
+        />
       ) : (
         <div>Loading...</div>
       )}
     </Container>
   );
-};
+}
 
 export default PokemonDetails;

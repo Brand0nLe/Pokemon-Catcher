@@ -9,5 +9,6 @@ export interface Pokemon {
     types: { slot: number; type: { name: string } }[];
     height: number;
     weight: number;
+    
   }
   
