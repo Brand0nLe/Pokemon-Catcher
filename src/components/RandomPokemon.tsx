@@ -31,7 +31,7 @@ function RandomPokemon() {
   }, []);
 
   const handleGetRandomPokemon = () => {
-    setRandomPokemon();
+    setRandomPokemon(null);
   };
 
   return (
