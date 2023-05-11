@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export interface Pokemon {
   id: number;
   name: string;
   imageUrl: string;
+  types: string[];
+  height: number;
+  weight: number;
 }
 
 interface PokemonCardProps {
@@ -16,33 +19,31 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
 
   const handleFavorite = () => {
     setFavorite(true);
-    const savedPokemon = localStorage.getItem('favoritePokemon');
-    if (savedPokemon) {
-      const favoritePokemon = JSON.parse(savedPokemon);
-      localStorage.setItem(
-        'favoritePokemon',
-        JSON.stringify([...favoritePokemon, pokemon])
-      );
-    } else {
-      localStorage.setItem('favoritePokemon', JSON.stringify([pokemon]));
-    }
-  };
+        // Save the favorite Pokemon to local storage
+        const favoritePokemon = JSON.parse(localStorage.getItem('favoritePokemon') || '[]');
+        favoritePokemon.push(pokemon);
+        localStorage.setItem('favoritePokemon', JSON.stringify(favoritePokemon));
+    };
 
-  return (
-    <Card className="mb-4">
-      <Card.Img variant="top" src={pokemon.imageUrl} />
-      <Card.Body>
-        <Card.Title>{pokemon.name}</Card.Title>
-        {favorite ? (
-          <Button variant="danger" disabled>
-            Favorite
-          </Button>
-        ) : (
-          <Button variant="primary" onClick={handleFavorite}>
-            Add Favorite
-          </Button>
-        )}
-      </Card.Body>
-    </Card>
-  );
-}
+    return (
+        <div className="text-center">
+          <h2>Pokemon Details</h2>
+          <div>
+            <img src={pokemon.imageUrl} alt={pokemon.name} />
+          </div>
+          <h3>Pokemon Name: {pokemon.name}</h3>
+          <h4>Types: {pokemon.types.join(', ')}</h4>
+          <h4>Height: {pokemon.height}</h4>
+          <h4>Weight: {pokemon.weight}</h4>
+          {favorite ? (
+            <Button variant="danger" disabled>
+              Favorite
+            </Button>
+          ) : (
+            <Button variant="primary" onClick={handleFavorite}>
+              Add Favorite
+            </Button>
+          )}
+        </div>
+      );
+    }

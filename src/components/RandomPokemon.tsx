@@ -1,47 +1,50 @@
 import { useEffect, useState } from 'react';
-import { Card, Button } from 'react-bootstrap';
-import { Pokemon, PokemonCard } from './PokemonCard';
+import { Button } from 'react-bootstrap';
+import { PokemonCard, Pokemon } from './PokemonCard';
 
 function RandomPokemon() {
   const [randomPokemon, setRandomPokemon] = useState<Pokemon | null>(null);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchRandomPokemon = async () => {
       try {
-        const randomId = Math.floor(Math.random() * 898) + 1; // Generate a random ID between 1 and 898
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
         const data = await response.json();
-        const pokemon: Pokemon = {
-          id: data.id,
-          name: data.name,
-          imageUrl: data.sprites.front_default,
+        const randomIndex = Math.floor(Math.random() * data.results.length);
+        const pokemonData = await fetch(data.results[randomIndex].url);
+        const pokemon = await pokemonData.json();
+        const randomPokemon: Pokemon = {
+          id: pokemon.id,
+          name: pokemon.name,
+          imageUrl: pokemon.sprites.front_default,
+          types: pokemon.types.map((type: any) => type.type.name),
+          height: pokemon.height / 10,
+          weight: pokemon.weight / 10,
         };
-        setRandomPokemon(pokemon);
+        setRandomPokemon(randomPokemon);
       } catch (error) {
-        setError(true);
+        console.error(error);
       }
     };
 
     fetchRandomPokemon();
   }, []);
 
-  if (error) {
-    return <div>Error loading data</div>;
-  }
+  const handleGetRandomPokemon = () => {
+    fetchRandomPokemon();
+  };
 
   return (
     <div>
+      <h1>Random Pokemon</h1>
       {randomPokemon ? (
-        <Card className="mb-4">
-          <Card.Img variant="top" src={randomPokemon.imageUrl} />
-          <Card.Body>
-            <Card.Title>{randomPokemon.name}</Card.Title>
-          </Card.Body>
-        </Card>
+        <PokemonCard pokemon={randomPokemon} />
       ) : (
         <div>Loading...</div>
       )}
+      <Button variant="primary" onClick={handleGetRandomPokemon}>
+        Get Random Pokemon
+      </Button>
     </div>
   );
 }
