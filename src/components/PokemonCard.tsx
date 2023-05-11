@@ -20,3 +20,4 @@ const PokemonCard: React.FC<Props> = ({ pokemon, handleFavorite, isFavorite }) =
 };
 
 export default PokemonCard;
+

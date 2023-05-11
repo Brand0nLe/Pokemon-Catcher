@@ -1,3 +1,6 @@
+import React, { useState } from 'react';
+import PokemonCard from './components/PokemonCard';
+import { Pokemon } from './interfaces';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import routes from './routes';
 import Navbar from './components/NavBar';

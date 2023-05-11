@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { Pokemon, PokemonCard } from './PokemonCard';
+import { Pokemon } from '../interfaces';
+import PokemonCard from './PokemonCard';
 
 interface PokemonDetailsProps {
   onAddFavorite: (pokemon: Pokemon) => void;

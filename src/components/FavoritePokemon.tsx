@@ -1,39 +1,23 @@
-import { useState, useEffect } from 'react';
-import { Card, Button } from 'react-bootstrap';
-import { PokemonCard } from './PokemonCard';
-import { Pokemon } from '../interfaces'; 
+import React from 'react';
+import { Pokemon } from '../interfaces';
 
-function FavoritePokemon() {
-  const [favoritePokemon, setFavoritePokemon] = useState<Pokemon[]>([]);
-
-  useEffect(() => {
-    const savedPokemon = localStorage.getItem('favoritePokemon');
-    if (savedPokemon) {
-      setFavoritePokemon(JSON.parse(savedPokemon));
-    }
-  }, []);
-
-  const handleRemoveFavorite = (pokemonId: number) => {
-    const updatedFavoritePokemon = favoritePokemon.filter(pokemon => pokemon.id !== pokemonId);
-    setFavoritePokemon(updatedFavoritePokemon);
-    localStorage.setItem('favoritePokemon', JSON.stringify(updatedFavoritePokemon));
-  };
-
-  return (
-    <div>
-      {favoritePokemon.map(pokemon => (
-        <Card key={pokemon.id} className="mb-4">
-          <PokemonCard pokemon={pokemon} />
-          <Card.Body>
-            <Card.Title>{pokemon.name}</Card.Title>
-            <Button variant="danger" onClick={() => handleRemoveFavorite(pokemon.id)}>
-              Release
-            </Button>
-          </Card.Body>
-        </Card>
-      ))}
-    </div>
-  );
+interface Props {
+  pokemon: Pokemon;
+  handleFavorite: (pokemon: Pokemon) => void;
+  isFavorite: boolean;
 }
 
-export default FavoritePokemon;
+const PokemonCard: React.FC<Props> = ({ pokemon, handleFavorite, isFavorite }) => {
+  return (
+    <div className="pokemon-card">
+      <img src={pokemon.imageUrl} alt={pokemon.name} />
+      <h2>{pokemon.name}</h2>
+      <button onClick={() => handleFavorite(pokemon)}>
+        {isFavorite ? 'Release' : 'Catch'}
+      </button>
+    </div>
+  );
+};
+
+export default PokemonCard;
+

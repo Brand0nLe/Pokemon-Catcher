@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Card, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Pokemon, PokemonCard } from './PokemonCard';
+import { Pokemon } from '../interfaces';
+import PokemonCard from './PokemonCard';
 import '../styles/style.css';
 
 function PokemonList() {
@@ -47,14 +48,15 @@ function PokemonList() {
     }
   };
 
-  const handleAddFavorite = (pokemon: Pokemon) => {
-    setFavorites((prevFavorites: Pokemon[]) => [...prevFavorites, pokemon]);
-    alert(`${pokemon.name} caught and added to favorites!`);
-  };
-
-  const handleRemoveFavorite = (pokemonId: number) => {
-    setFavorites((prevFavorites) => prevFavorites.filter((favPokemon) => favPokemon.id !== pokemonId));
-    alert(`Pokemon with ID ${pokemonId} released from favorites!`);
+  const handleFavorite = (selectedPokemon: Pokemon) => {
+    const isFavorite = favorites.some((pokemon) => pokemon.id === selectedPokemon.id);
+    if (isFavorite) {
+      setFavorites((prevFavorites) => prevFavorites.filter((pokemon) => pokemon.id !== selectedPokemon.id));
+      alert(`${selectedPokemon.name} has been released from favorites!`);
+    } else {
+      setFavorites((prevFavorites) => [...prevFavorites, selectedPokemon]);
+      alert(`${selectedPokemon.name} caught and added to favorites!`);
+    }
   };
 
   useEffect(() => {
@@ -64,6 +66,7 @@ function PokemonList() {
   if (error) {
     return <div>Error loading data</div>;
   }
+
 
 
 
@@ -87,18 +90,18 @@ function PokemonList() {
               Random Pokemon
             </button>
             {pokemon && (
-             <button
-             className="btn btn-primary"
-             type="button"
-             onClick={() =>
-               favorites.some((favPokemon) => favPokemon.id === pokemon.id)
-                 ? handleRemoveFavorite(pokemon.id)
-                 : handleAddFavorite(pokemon)
-             }
-           >
-             {favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? 'Release' : 'Catch'}
-           </button>
-           
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={() =>
+                  favorites.some((favPokemon) => favPokemon.id === pokemon.id)
+                    ? handleRemoveFavorite(pokemon.id)
+                    : handleAddFavorite(pokemon)
+                }
+              >
+                {favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? 'Release' : 'Catch'}
+              </button>
+
             )}
           </div>
         </div>
@@ -170,7 +173,7 @@ function PokemonList() {
       <h2 className="mt-4 text-center">Favorite Pokemon</h2>
       <div className="favorite-pokemon">
         {favorites.map((favPokemon) => (
-          <PokemonCard key={favPokemon.id} pokemon={favPokemon} onAddFavorite={handleAddFavorite} />
+          <PokemonCard key={favPokemon.id} pokemon={favPokemon} handleFavorite={handleFavorite} isFavorite={true} />
         ))}
       </div>
     </Container>
