@@ -23,7 +23,7 @@ function App() {
           </Navbar.Collapse>
         </Navbar>
         <div className="container mt-4">
-          <Route path="/" exact component={PokemonList} />
+          <Route path="/" component={PokemonList} />
           <Route path="/pokemon/:id" component={PokemonDetails} />
           <Route path="/favorite" component={FavoritePokemon} />
           <Route path="/random" component={RandomPokemon} />
