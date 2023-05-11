@@ -164,11 +164,9 @@ function PokemonList() {
             <Row>
               <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
-                <p>Normal</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.front_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
-                <p>Shiny</p>
               </Col>
             </Row>
             <div className="pokemon-info">
