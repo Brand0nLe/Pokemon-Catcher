@@ -5,31 +5,26 @@ export interface Pokemon {
   id: number;
   name: string;
   imageUrl: string;
-  types: string[];
-  height: number;
-  weight: number;
 }
 
 interface PokemonCardProps {
   pokemon: Pokemon;
-  onFavorite?: (pokemon: Pokemon) => void;
-  onRemoveFavorite?: (pokemon: Pokemon) => void;
 }
 
-export function PokemonCard({ pokemon, onFavorite, onRemoveFavorite }: PokemonCardProps) {
+export function PokemonCard({ pokemon }: PokemonCardProps) {
   const [favorite, setFavorite] = useState(false);
 
   const handleFavorite = () => {
     setFavorite(true);
-    if (onFavorite) {
-      onFavorite(pokemon);
-    }
-  };
-
-  const handleRemoveFavorite = () => {
-    setFavorite(false);
-    if (onRemoveFavorite) {
-      onRemoveFavorite(pokemon);
+    const savedPokemon = localStorage.getItem('favoritePokemon');
+    if (savedPokemon) {
+      const favoritePokemon = JSON.parse(savedPokemon);
+      localStorage.setItem(
+        'favoritePokemon',
+        JSON.stringify([...favoritePokemon, pokemon])
+      );
+    } else {
+      localStorage.setItem('favoritePokemon', JSON.stringify([pokemon]));
     }
   };
 
@@ -38,12 +33,9 @@ export function PokemonCard({ pokemon, onFavorite, onRemoveFavorite }: PokemonCa
       <Card.Img variant="top" src={pokemon.imageUrl} />
       <Card.Body>
         <Card.Title>{pokemon.name}</Card.Title>
-        <div>Type: {pokemon.types.join(', ')}</div>
-        <div>Height: {pokemon.height} m</div>
-        <div>Weight: {pokemon.weight} kg</div>
         {favorite ? (
-          <Button variant="danger" onClick={handleRemoveFavorite}>
-            Remove Favorite
+          <Button variant="danger" disabled>
+            Favorite
           </Button>
         ) : (
           <Button variant="primary" onClick={handleFavorite}>

@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Navbar, Nav } from 'react-bootstrap';
 import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
 import FavoritePokemon from './components/FavoritePokemon';
@@ -9,33 +9,24 @@ function App() {
   return (
     <Router>
       <div>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" className="mr-auto">
-              <Link to="/" className="text-white text-decoration-none">
-                Pokemon App
-              </Link>
-            </Typography>
-            <Link to="/favorite" className="text-white text-decoration-none">
-              Favorite Pokemon
-            </Link>
-          </Toolbar>
-        </AppBar>
+        <Navbar bg="dark" variant="dark" expand="lg">
+          <Navbar.Brand as={Link} to="/" className="text-white">
+            Pokemon App
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <Nav.Link as={Link} to="/favorite" className="text-white">
+                Favorite Pokemon
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
         <div className="container mt-4">
-          <Switch>
-            <Route path="/" exact>
-              <PokemonList />
-            </Route>
-            <Route path="/pokemon/:id">
-              <PokemonDetails />
-            </Route>
-            <Route path="/favorite">
-              <FavoritePokemon />
-            </Route>
-            <Route path="/random">
-              <RandomPokemon />
-            </Route>
-          </Switch>
+          <Route path="/" exact component={PokemonList} />
+          <Route path="/pokemon/:id" component={PokemonDetails} />
+          <Route path="/favorite" component={FavoritePokemon} />
+          <Route path="/random" component={RandomPokemon} />
         </div>
       </div>
     </Router>
@@ -43,4 +34,3 @@ function App() {
 }
 
 export default App;
-
