@@ -63,6 +63,9 @@ html {
   width: 200px;
   height: 200px;
   object-fit: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pokemon-info {

@@ -31,8 +31,6 @@ function PokemonList() {
         const speciesResponse = await fetch(data.species.url);
         const speciesData = await speciesResponse.json();
 
-        const evolutionResponse = await fetch(speciesData.evolution_chain.url);
-        const evolutionData = await evolutionResponse.json();
 
         const pokemon: Pokemon = {
           id: data.id,
