@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Card, Row, Col } from 'react-bootstrap';
 import '../styles/style.css';
 
 interface Pokemon {
@@ -35,6 +35,11 @@ function PokemonList() {
       console.error(error);
       setPokemon(null);
     }
+  };
+
+  const handleRandom = () => {
+    const randomId = Math.floor(Math.random() * 898) + 1;
+    window.location.href = `/pokemon/${randomId}`;
   };
 
   useEffect(() => {
@@ -93,10 +98,16 @@ function PokemonList() {
           </div>
         </div>
       </div>
+      <div className="d-flex justify-content-end mb-4">
+        <Button variant="primary" onClick={handleRandom}>
+          Random Pokemon
+        </Button>
+      </div>
       {pokemon && (
         <Card className="mt-4 pokemon-card">
           <Card.Body>
-            <Card.Title className="text-center">{pokemon.name}</Card.Title>
+           
+          <Card.Title className="text-center">{pokemon.name}</Card.Title>
             <Row>
               <Col sm={6} md={3} className="text-center">
                 <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
