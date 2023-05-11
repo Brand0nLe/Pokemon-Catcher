@@ -29,13 +29,23 @@ function PokemonList() {
 
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchQuery.toLowerCase()}`);
-      const data = await response.json();
-      setPokemon(data);
+
+      if (response.ok) {
+        const data = await response.json();
+        setPokemon(data);
+      } else if (response.status === 404) {
+        alert('Invalid Pokemon name, please search for a real pokemon!');
+        setPokemon(null);
+      } else {
+        throw new Error('Failed to fetch Pokemon data');
+      }
     } catch (error) {
       console.error(error);
+      alert('Error occurred while fetching Pokemon data');
       setPokemon(null);
     }
   };
+
 
   const handleRandom = async () => {
     try {
@@ -59,7 +69,7 @@ function PokemonList() {
 
   return (
     <Container className="mt-4">
-      <h1 className="text-center">Pokemon Search</h1>
+      <h1 className="text-center">Pokedex</h1>
       <div className="d-flex justify-content-center mt-4">
         <div className="input-group">
           <input
@@ -93,7 +103,7 @@ function PokemonList() {
                 <p>Back</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
-                <img src={pokemon.sprites.front_shiny} alt                ="Front Shiny Sprite" className="pokemon-image" />
+                <img src={pokemon.sprites.front_shiny} alt="Front Shiny Sprite" className="pokemon-image" />
                 <p>Shiny Front</p>
               </Col>
               <Col sm={6} md={3} className="text-center">
