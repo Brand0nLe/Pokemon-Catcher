@@ -1,57 +1,22 @@
-import { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import React from 'react';
+import { Pokemon } from '../interfaces';
 
-export interface Pokemon {
-  id: number;
-  name: string;
-  imageUrl: string;
-  sprites: {
-    front_default: string;
-    front_shiny: string;
-  };
-  types: { slot: number; type: { name: string } }[];
-  height: number;
-  weight: number;
-}
-
-interface PokemonCardProps {
+interface Props {
   pokemon: Pokemon;
-  onAddFavorite: (pokemon: Pokemon) => void; // Add the onAddFavorite prop
+  handleFavorite: (pokemon: Pokemon) => void;
+  isFavorite: boolean;
 }
 
-export function PokemonCard({ pokemon, onAddFavorite }: PokemonCardProps) { // Add the onAddFavorite prop to the component function
-  const [favorite, setFavorite] = useState(false);
-
-  const handleFavorite = () => {
-    setFavorite(true);
-    // Save the favorite Pokemon to local storage
-    const favoritePokemon = JSON.parse(localStorage.getItem('favoritePokemon') || '[]');
-    favoritePokemon.push(pokemon);
-    localStorage.setItem('favoritePokemon', JSON.stringify(favoritePokemon));
-
-    // Call the onAddFavorite function passed as prop
-    onAddFavorite(pokemon);
-  };
-
+const PokemonCard: React.FC<Props> = ({ pokemon, handleFavorite, isFavorite }) => {
   return (
-    <div className="text-center">
-      <h2>Pokemon Details</h2>
-      <div>
-        <img src={pokemon.imageUrl} alt={pokemon.name} />
-      </div>
-      <h3>Pokemon Name: {pokemon.name}</h3>
-      <h4>Types: {pokemon.types.join(', ')}</h4>
-      <h4>Height: {pokemon.height}</h4>
-      <h4>Weight: {pokemon.weight}</h4>
-      {favorite ? (
-        <Button variant="danger" disabled>
-          Favorite
-        </Button>
-      ) : (
-        <Button variant="primary" onClick={handleFavorite}>
-          Add Favorite
-        </Button>
-      )}
+    <div className="pokemon-card">
+      <img src={pokemon.imageUrl} alt={pokemon.name} />
+      <h2>{pokemon.name}</h2>
+      <button onClick={() => handleFavorite(pokemon)}>
+        {isFavorite ? 'Release' : 'Catch'}
+      </button>
     </div>
   );
-}
+};
+
+export default PokemonCard;

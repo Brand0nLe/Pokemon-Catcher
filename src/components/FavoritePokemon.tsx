@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { Pokemon, PokemonCard } from './PokemonCard';
+import { PokemonCard } from './PokemonCard';
+import { Pokemon } from '../interfaces'; 
 
 function FavoritePokemon() {
   const [favoritePokemon, setFavoritePokemon] = useState<Pokemon[]>([]);
@@ -26,7 +27,7 @@ function FavoritePokemon() {
           <Card.Body>
             <Card.Title>{pokemon.name}</Card.Title>
             <Button variant="danger" onClick={() => handleRemoveFavorite(pokemon.id)}>
-              Remove Favorite
+              Release
             </Button>
           </Card.Body>
         </Card>
