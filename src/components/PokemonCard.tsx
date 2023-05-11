@@ -8,20 +8,34 @@ export interface Pokemon {
   types: string[];
   height: number;
   weight: number;
+  sprites: {
+    front_default: string;
+    front_shiny: string;
+  }
+  
 }
 
 interface PokemonCardProps {
   pokemon: Pokemon;
-  onAddFavorite: (pokemon: Pokemon) => void;
+  imageUrl: string;
+  onAddFavorite?: () => void;
 }
 
-export function PokemonCard({ pokemon, onAddFavorite }: PokemonCardProps) {
+export function PokemonCard({ pokemon, onAddFavorite, imageUrl }: PokemonCardProps) {
   const [favorite, setFavorite] = useState(false);
 
   const handleFavorite = () => {
     setFavorite(true);
-    onAddFavorite(pokemon);
+    const favoritePokemon = JSON.parse(localStorage.getItem('favoritePokemon') || '[]');
+    favoritePokemon.push(pokemon);
+    localStorage.setItem('favoritePokemon', JSON.stringify(favoritePokemon));
+
+    if (onAddFavorite) {
+      onAddFavorite();
+    }
   };
+
+
 
   return (
     <div className="text-center">

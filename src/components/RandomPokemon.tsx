@@ -16,11 +16,15 @@ function RandomPokemon() {
         const randomPokemon: Pokemon = {
           id: pokemon.id,
           name: pokemon.name,
-          imageUrl: pokemon.sprites.front_default,
+          sprites: {
+            front_default: pokemon.sprites.front_default,
+            front_shiny: pokemon.sprites.front_shiny,
+          },
           types: pokemon.types.map((type: any) => type.type.name),
-          height: pokemon.height / 10,
-          weight: pokemon.weight / 10,
+          height: pokemon.height,
+          weight: pokemon.weight,
         };
+        
         setRandomPokemon(randomPokemon);
       } catch (error) {
         console.error(error);

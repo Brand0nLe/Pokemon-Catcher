@@ -4,21 +4,6 @@ import { Link } from 'react-router-dom';
 import { Pokemon, PokemonCard } from './PokemonCard';
 import '../styles/style.css';
 
-interface Pokemon {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
-    back_default: string;
-    front_shiny: string;
-    back_shiny: string;
-  };
-  moves: { move: { name: string } }[];
-  types: { slot: number; type: { name: string } }[];
-  abilities: { slot: number; ability: { name: string } }[];
-  evolution_chain: { id: number; name: string }[];
-}
-
 function PokemonList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
@@ -62,20 +47,14 @@ function PokemonList() {
     }
   };
 
-  const handleCatch = () => {
-    if (pokemon) {
-      setFavorites((prevFavorites) => [...prevFavorites, pokemon]);
-      alert(`${pokemon.name} caught and added to favorites!`);
-    }
+  const handleAddFavorite = (pokemon: Pokemon) => {
+    setFavorites((prevFavorites: Pokemon[]) => [...prevFavorites, pokemon]);
+    alert(`${pokemon.name} caught and added to favorites!`);
   };
 
-  const handleRelease = () => {
-    if (pokemon) {
-      setFavorites((prevFavorites) =>
-        prevFavorites.filter((favPokemon) => favPokemon.id !== pokemon.id)
-      );
-      alert(`${pokemon.name} released from favorites!`);
-    }
+  const handleRemoveFavorite = (pokemonId: number) => {
+    setFavorites((prevFavorites) => prevFavorites.filter((favPokemon) => favPokemon.id !== pokemonId));
+    alert(`Pokemon with ID ${pokemonId} released from favorites!`);
   };
 
   useEffect(() => {
@@ -103,13 +82,25 @@ function PokemonList() {
               Search
             </button>
             <button className="btn btn-primary" type="button" onClick={handleRandom}>
-              Random Pokemon            </button>
-           {pokemon && (
-        <Card className="mt-4">
-          <Card.Body>
-            <Card.Title className="text-center">{pokemon.name}</Card.Title>
-            <Row>
-              <Col sm={6} md={3} className="text-center">
+              Random Pokemon
+            </button>
+            {pokemon && (
+             <button
+             className="btn btn-primary"
+             type="button"
+             onClick={() =>
+               favorites.some((favPokemon) => favPokemon.id === pokemon.id)
+                 ? handleRemoveFavorite(pokemon.id)
+                 : handleAddFavorite(pokemon)
+             }
+           >
+             {favorites.some((favPokemon) => favPokemon.id === pokemon.id) ? 'Release' : 'Catch'}
+           </button>
+           
+            )}
+          </div>
+        </div>
+      </div>
       {pokemon && (
         <Card className="mt-4">
           <Card.Body>
@@ -129,7 +120,7 @@ function PokemonList() {
               <div className="pokemon-types">
                 {pokemon.types.map((type, index) => (
                   <span key={type.slot}>
-                    {index > 0 && ", "}
+                    {index > 0 && ', '}
                     {type.type.name}
                   </span>
                 ))}
@@ -140,7 +131,7 @@ function PokemonList() {
               <div className="pokemon-abilities">
                 {pokemon.abilities.map((ability, index) => (
                   <span key={ability.slot}>
-                    {index > 0 && ", "}
+                    {index > 0 && ', '}
                     {ability.ability.name}
                   </span>
                 ))}
@@ -151,7 +142,7 @@ function PokemonList() {
               <div className="pokemon-moves">
                 {pokemon.moves.map((move, index) => (
                   <span key={`${move.move.name}-${index}`}>
-                    {index > 0 && ", "}
+                    {index > 0 && ', '}
                     {move.move.name}
                   </span>
                 ))}
@@ -160,7 +151,7 @@ function PokemonList() {
             <div className="pokemon-info">
               <h5>Evolution Chain:</h5>
               <div className="pokemon-evolution">
-                {pokemon && pokemon.evolution_chain ? (
+                {pokemon.evolution_chain ? (
                   pokemon.evolution_chain.map((evolution) => (
                     <span key={evolution.id}>{evolution.name}</span>
                   ))
@@ -172,9 +163,20 @@ function PokemonList() {
           </Card.Body>
         </Card>
       )}
+
+      {/* Favorite Pokemon section */}
+      <h2 className="mt-4 text-center">Favorite Pokemon</h2>
+      <div className="favorite-pokemon">
+        {favorites.map((favPokemon) => (
+          <PokemonCard key={favPokemon.id} pokemon={favPokemon} onAddFavorite={handleAddFavorite} />
+        ))}
+      </div>
     </Container>
   );
 }
 
 export default PokemonList;
-
+const handleAddFavorite = (pokemon: Pokemon) => {
+  setFavorites((prevFavorites) => [...prevFavorites, pokemon]);
+  alert(`${pokemon.name} caught and added to favorites!`);
+};

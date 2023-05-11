@@ -16,13 +16,18 @@ function PokemonDetails() {
         const pokemon: Pokemon = {
           id: data.id,
           name: data.name,
-          imageUrl: data.sprites.front_default,
+          sprites: {
+            front_default: data.sprites.front_default,
+            front_shiny: data.sprites.front_shiny,
+          },
           types: data.types.map((type: any) => type.type.name),
-          height: data.height / 10,
-          weight: data.weight / 10,
+          height: data.height,
+          weight: data.weight,
         };
+
         setPokemon(pokemon);
       } catch (error) {
+        console.error(error);
         setError(true);
       }
     };
