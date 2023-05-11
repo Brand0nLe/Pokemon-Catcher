@@ -4,14 +4,14 @@ import { Pokemon } from '../interfaces';
 import PokemonCard from './PokemonCard';
 import '../styles/style.css';
 
-
-
-
 function PokemonList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState(false);
-  const [favorites, setFavorites] = useState<Pokemon[]>([]);
+  const [favorites, setFavorites] = useState<Pokemon[]>(() => {
+    const storedFavorites = localStorage.getItem('favorites');
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  });
 
   const handleSearch = async () => {
     if (searchQuery.trim() === '') {
@@ -106,6 +106,12 @@ function PokemonList() {
       alert(`${selectedPokemon.name} caught and added to favorites!`);
     }
   };
+
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
+
 
   useEffect(() => {
     handleRandom();
