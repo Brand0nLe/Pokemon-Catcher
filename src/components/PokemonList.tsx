@@ -115,7 +115,7 @@ function PokemonList() {
               <h5>Moves:</h5>
               <div className="pokemon-moves">
                 {pokemon.moves.map((move, index) => (
-                  <span key={move.move.name}>
+                  <span key={`${move.move.name}-${index}`}>
                     {index > 0 && ", "}
                     {move.move.name}
                   </span>
