@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { Pokemon } from '../interfaces';
-import PokemonCard from './PokemonCard';
+import { Pokemon, PokemonCard } from './PokemonCard';
 
 interface PokemonDetailsProps {
   onAddFavorite: (pokemon: Pokemon) => void;
 }
 
-function PokemonDetails({ onAddFavorite }: PokemonDetailsProps) {
+const PokemonDetails: React.FC<PokemonDetailsProps> = ({ onAddFavorite }: PokemonDetailsProps) => {
   const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState(false);
@@ -21,6 +20,7 @@ function PokemonDetails({ onAddFavorite }: PokemonDetailsProps) {
         const pokemon: Pokemon = {
           id: data.id,
           name: data.name,
+          imageUrl: data.sprites.front_default,
           sprites: {
             front_default: data.sprites.front_default,
             front_shiny: data.sprites.front_shiny,
@@ -53,6 +53,6 @@ function PokemonDetails({ onAddFavorite }: PokemonDetailsProps) {
       )}
     </Container>
   );
-}
+};
 
 export default PokemonDetails;
