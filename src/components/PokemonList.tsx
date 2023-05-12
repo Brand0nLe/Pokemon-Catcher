@@ -165,19 +165,27 @@ function PokemonList() {
           <Card.Body>
             <Card.Title className="text-center">{pokemon.name}</Card.Title>
             <Row>
-              <Col sm={6} md={3}>
-                <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
-              </Col>
-              <Col sm={6} md={3}>
-                <img src={pokemon.sprites.back_default} alt="Front Sprite" className="pokemon-image" />
-              </Col>
-              <Col sm={6} md={3}>
-                <img src={pokemon.sprites.front_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
-              </Col>
-              <Col sm={6} md={3}>
-                <img src={pokemon.sprites.back_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
-              </Col>
-            </Row>
+  {pokemon.sprites.front_default && (
+    <Col sm={6} md={3}>
+      <img src={pokemon.sprites.front_default} alt="Front Sprite" className="pokemon-image" />
+    </Col>
+  )}
+  {pokemon.sprites.back_default && (
+    <Col sm={6} md={3}>
+      <img src={pokemon.sprites.back_default} alt="Back Sprite" className="pokemon-image" />
+    </Col>
+  )}
+  {pokemon.sprites.front_shiny && (
+    <Col sm={6} md={3}>
+      <img src={pokemon.sprites.front_shiny} alt="Shiny Front Sprite" className="pokemon-image" />
+    </Col>
+  )}
+  {pokemon.sprites.back_shiny && (
+    <Col sm={6} md={3}>
+      <img src={pokemon.sprites.back_shiny} alt="Shiny Back Sprite" className="pokemon-image" />
+    </Col>
+  )}
+</Row>
             <div className="pokemon-info">
               <h5>Types:</h5>
               <div className="pokemon-types">
