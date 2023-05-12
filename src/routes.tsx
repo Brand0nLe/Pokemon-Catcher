@@ -1,6 +1,5 @@
 import PokemonList from './components/PokemonList';
 import PokemonDetails from './components/PokemonDetails';
-import FavoritePokemon from './components/FavoritePokemon';
 import RandomPokemon from './components/RandomPokemon';
 
 interface CustomRouteProps {
@@ -18,10 +17,6 @@ const routes: CustomRouteProps[] = [
   {
     path: '/pokemon/:id',
     component: PokemonDetails,
-  },
-  {
-    path: '/favorite',
-    component: FavoritePokemon,
   },
   {
     path: '/random',
