@@ -38,25 +38,18 @@ h1 {
 }
 
 
-
 .form-control {
   text-transform: lowercase;
-  margin-right: 10px;
-  max-width: 50%;
-}
-
-
-div.input-group{
-  display: contents;
-  width: 100%;
-}
-div.wrapper.row {
   max-width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 
+
+
+h5{
+font-family: PoppinsRegular;
+color: black;
+}
 
 .btn-primary {
   background-color: #4F8235!important;
@@ -72,15 +65,16 @@ div.wrapper.row {
   border-color: #41722D!important;
 }
 
-/* .card {
+.card {
   border: none;
   border-radius: 10px;
   padding: 20px;
   margin-top: 20px;
-} */
-div.card-body{
-  background-color: transparent;
+  background-color: rgb(65, 114, 45, 0.5)!important;
+  font-family: PoppinsRegular;
+  color: black;
 }
+
 
 
 
@@ -103,6 +97,8 @@ div.card-body{
 .pokemon-info {
   margin-top: 20px;
   text-align: center;
+  background-color: transparent;
+  opacity: 0.8;
 }
 
 .pokemon-info h3 {

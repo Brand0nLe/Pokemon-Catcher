@@ -127,9 +127,8 @@ function PokemonList() {
 
   return (
     <Container className="mt-4 transparent-bg">
-      <h1 className="text-center">Pokedex</h1>
-      <div className=" mt-4">
-        <Row className='wrapper'>
+      <h1 className="text-center">Who's That Pokemon?</h1>
+      <div className="mt-4">
         <div className="input-group">
           <input
             type="text"
@@ -160,7 +159,6 @@ function PokemonList() {
             )}
           </div>
         </div>
-        </Row>
       </div>
       {pokemon && (
         <Card className="mt-4">
