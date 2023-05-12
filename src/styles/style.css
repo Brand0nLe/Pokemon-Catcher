@@ -2,11 +2,11 @@
   font-family: PoppinsRegular;
   src: url(../assets/Poppins-Regular.ttf);
 }
+
 @font-face {
   font-family: PoppinsExtraLight;
   src: url(../assets/Poppins-ExtraLight.ttf);
 }
-
 
 body,
 html {
@@ -26,7 +26,6 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
   padding: 10px;
   border-radius: 10px;
-  
 }
 
 h1 {
@@ -37,18 +36,9 @@ h1 {
   text-transform: uppercase;
 }
 
-
-.form-control {
-  text-transform: lowercase;
-  max-width: 100%;
-}
-
-
-
-
-h5{
-font-family: PoppinsRegular;
-color: black;
+h5 {
+  font-family: PoppinsRegular;
+  color: black;
 }
 
 .btn-primary {
@@ -70,13 +60,10 @@ color: black;
   border-radius: 10px;
   padding: 20px;
   margin-top: 20px;
-  background-color: rgb(65, 114, 45, 0.5)!important;
+  background-color: rgba(65, 114, 45, 0.5)!important;
   font-family: PoppinsRegular;
   color: black;
 }
-
-
-
 
 .card-title {
   color: black;
@@ -157,7 +144,6 @@ color: black;
   background-color: #FFF;
   border: none;
   border-radius: 10px;
-  padding: 20px;
   margin: 10px;
   display: flex;
   flex-direction: column;
@@ -201,40 +187,24 @@ color: black;
   margin-top: 20px;
 }
 
-.pokemon-card {
-  background-color: #FFF;
-  border: none;
-  border-radius: 10px;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-
-
-/* Adding opacity to see the wallpaper bg */
 .pokemon-card,
 .favorite-pokemon {
   background-color: transparent;
 }
 
-div.container.mt-4{
+div.container.mt-4 {
   text-transform: capitalize;
 }
 
-.transparent-bg{
-background-color: transparent;
+.transparent-bg {
+  background-color: transparent;
 }
 
-.footer{
+.footer {
   padding-top: 20px;
 }
 
-
-
-div.col-md-3{
+div.col-md-3 {
   padding: 0;
   display: flex;
   justify-content: center;
