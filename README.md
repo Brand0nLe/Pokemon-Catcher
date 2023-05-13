@@ -1,6 +1,6 @@
 # Pokemon Catcher
 
-This is a Pokemon Catcher application built with React.je, Bootstrap, and TypeScript. It utilizes the PokeAPI https://pokeapi.co/ to fetch data about various Pokemon species. The application allows users to search for Pokemon by name and view their details, such as their sprites, types, abilities, and moves. Users can also catch their favorite Pokemon and store them using local storage.
+This is a Pokemon Catcher application built with React.js, Bootstrap, and TypeScript. It utilizes the PokeAPI https://pokeapi.co/ to fetch data about various Pokemon species. The application allows users to search for Pokemon by name and view their details, such as their sprites, types, abilities, and moves. Users can also catch their favorite Pokemon and store them using local storage.
 
 ## Features
 
@@ -8,6 +8,7 @@ This is a Pokemon Catcher application built with React.je, Bootstrap, and TypeSc
 - Display of Pokemon sprites in normal and shiny colors
 - Information about each Pokemon's types, abilities, and moves
 - Catching and releasing Pokemon, with the ability to store favorites locally
+- Alerts users when searching without entering a Pokémon name or if Pokémon does not exist.
 - Responsive design that adapts to different screen sizes and devices
 
 ## Technologies Used
