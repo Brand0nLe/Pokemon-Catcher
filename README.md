@@ -17,6 +17,7 @@ This is a Pokemon Catcher application built with React, Bootstrap, and TypeScrip
 - TypeScript
 - CSS
 - HTML
+- RESTful API: PokeAPI (https://pokeapi.co/)
 
 ## Setup
 
