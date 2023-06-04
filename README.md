@@ -2,7 +2,10 @@
 
 This is a Pokemon Catcher application built with React.js, Bootstrap, and TypeScript. It utilizes the PokeAPI https://pokeapi.co/ to fetch data about various Pokemon species. The application allows users to search for Pokemon by name and view their details, such as their sprites, types, abilities, and moves. Users can also catch their favorite Pokemon and store them using local storage.
 
-**Check out the deployed application [here](https://whoisthatpokemon.azurewebsites.net/).**
+## Deployment
+
+The application is deployed on Azure and can be accessed using the following link:
+[Pokemon Catcher](https://whoisthatpokemon.azurewebsites.net/)
 
 ## Features
 
