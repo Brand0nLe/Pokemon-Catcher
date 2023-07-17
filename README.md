@@ -5,7 +5,8 @@ This is a Pokemon Catcher application built with React.js, Bootstrap, and TypeSc
 ## Deployment
 
 The application is deployed on Azure and can be accessed using the following link:
-[Pokemon Catcher](https://whoisthatpokemon.azurewebsites.net/)
+[Pokemon Catcher Hosting currently unavailable](https://whoisthatpokemon.azurewebsites.net/)
+Azure links unavailable at the moment. I'm sorry for the inconvenience, but please be patient and I'll have this re-hosted soon. Thank you!
 
 ## Features
 
